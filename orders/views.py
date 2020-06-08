@@ -1,6 +1,18 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render
+from orders.models import PizzaSize, Pizza, PizzaTopping, Subs, SubsTopping, Pasta, Salad, DinnerPlatters
+from django.urls import reverse
 
-# Create your views here.
+
+
 def index(request):
-    return HttpResponse("Project 3: TODO")
+	context = {
+		"pizzas":Pizza.objects.all(),
+		"toppings":PizzaTopping.objects.all(),
+		"subs":Subs.objects.all(),
+		"substoppings":SubsTopping.objects.all(),
+		"salads":Salad.objects.all(),
+		"pastas":Pasta.objects.all(),
+		"dinnerplatters":DinnerPlatters.objects.all()
+	}
+	return render(request, "index.html", context)

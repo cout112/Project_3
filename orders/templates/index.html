@@ -1,0 +1,190 @@
+{% load static %}
+
+<!DOCTYPE>
+<html>
+<head>
+	<title>Pizza</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<link rel="stylesheet" href="{% static 'style.css' %}"/>
+	<script src="{% static 'index.js' %}"></script>
+</head>
+<body>
+	<div class='container'>
+		<h2>0</h2>
+	    <button class='btn' id="increase">+</button>
+	    <button class='btn' id="decrease">-</button>
+		<h1>PIZZAS</h1>
+		<table class='table'>
+			<thead>
+			<tr>
+				<th scope='col'> Style</th>
+				<th scope='col'> Size</th>
+				<th scope='col'> Cheese</th>
+				<th scope='col'> 1 Topping</th>
+				<th scope='col'> 2 Toppings</th>
+				<th scope='col'> 3 Toppings</th>
+				<th scope='col'> 4 Toppings</th>
+			</tr>
+		</thead>
+		<tbody>
+
+		{% for pizza in pizzas %}
+			<tr>
+				<td>{{ pizza.style }}</td>
+				<td>{{ pizza.size }}</td>
+				<td>{{ pizza.price0 }}</td>
+				<td>{{ pizza.price1 }}</td>
+				<td>{{ pizza.price2 }}</td>
+				<td>{{ pizza.price3 }}</td>
+				<td>{{ pizza.price4 }}</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+		</table>
+		<hr>
+		<h1>TOPPINGS</h1>	
+		<table class='table'>
+			<thead>
+			<tr>
+				{% for topping in toppings %}
+				<th scope='col'>{{topping.id}}</th>
+				{% endfor %}
+				
+			</tr>
+		</thead>
+		<tbody>
+
+			<tr>
+				{% for topping in toppings %}
+				<td>{{ topping.name }}</td>
+				{% endfor %}
+			</tr>
+		
+		</tbody>
+		</table>
+
+
+		<hr>
+		<h1>SUBS</h1>	
+		<table class='table'>
+			<thead>
+			<tr>
+				
+				<th scope='col'>Subs</th>
+				<th scope='col'>Small</th>
+				<th scope='col'>Large</th>
+				
+				
+			</tr>
+		</thead>
+		<tbody>
+			{% for sub in subs %}
+			<tr>
+				<td>{{ sub.name }}</td>
+				<td>{{ sub.small }}</td>
+				<td>{{ sub.large }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+		</table>
+
+
+
+		<hr>
+		<h1>SUBS TOPPINGS</h1>	
+		<table class='table'>
+			<thead>
+			<tr>
+				{% for topping in substoppings %}
+				<th scope='col'>{{topping.id}}</th>
+				{% endfor %}
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				{% for topping in substoppings %}
+				<td>{{ topping.name }}</td>
+				{% endfor %}
+			</tr>
+		</tbody>
+		</table>
+
+
+		<hr>
+		<h1>SALADS</h1>	
+		<table class='table'>
+			<thead>
+			<tr>
+				
+				<th scope='col'>Salads</th>
+				<th scope='col'>Price</th>
+				
+				
+			</tr>
+		</thead>
+		<tbody>
+			{% for salad in salads %}
+			<tr>
+				<td>{{ salad.name }}</td>
+				<td>{{ salad.price }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+		</table>
+
+
+		<hr>
+		<h1>PASTA</h1>	
+		<table class='table'>
+			<thead>
+			<tr>
+				
+				<th scope='col'>Pasta</th>
+				<th scope='col'>Price</th>
+				
+				
+			</tr>
+		</thead>
+		<tbody>
+			{% for pasta in pastas %}
+			<tr>
+				<td>{{ pasta.name }}</td>
+				<td>{{ pasta.price }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+		</table>
+
+
+		<hr>
+		<h1>DINNER PLATTERS</h1>	
+		<table class='table'>
+			<thead>
+			<tr>
+				
+				<th scope='col'>Platter</th>
+				<th scope='col'>Small</th>
+				<th scope='col'>Large</th>
+				
+				
+			</tr>
+		</thead>
+		<tbody>
+			{% for platter in dinnerplatters %}
+			<tr>
+				<td>{{ platter.name }}</td>
+				<td>{{ platter.small }}</td>
+				<td>{{ platter.large }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+		</table>
+
+
+
+	</div>
+	
+
+			
+</body>
+</html>
