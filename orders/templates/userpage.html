@@ -1,0 +1,59 @@
+
+{% extends "base.html" %}
+{%block body%}
+
+
+
+
+<div class='row card'  style='padding:5px'>
+	<div class='card-body'>
+		<div class='col-6'>
+			
+			<h3>{{user.email}}</h3>
+		</div>
+		<div class='col-6'>
+
+			<form action="{% url 'logout' %}" method='post'>
+				{% csrf_token %}
+			<button type='submit' href="{% url 'logout' %}" class="btn btn-light">Logout</button>
+			</form>
+		</div>
+
+
+		<div>
+			Known addresses
+			
+		</div>
+	</div>
+	
+</div>
+<div class='row'>
+	<div class='col-9'>ORDERS</div>
+	<div class='col-3 card'>
+
+	<div><h3>Add address</h3></div>
+
+
+			<form action="{% url 'logout' %}" method='post'>
+				{% csrf_token %}
+				<label> Country </label>
+				<input type='text' class="form-control"/>
+				<label> State </label>
+				<input type='text' class="form-control"/>
+				<label> City </label>
+				<input type='text' class="form-control"/>
+				<label> Street </label>
+				<input type='text' class="form-control"/>
+				<label> Number </label>
+				<input type='text' class="form-control"/>
+				<label> Apartment (if not a house) </label>
+				<input type='text' class="form-control"/>
+			<button type='submit' href="{% url 'address' %}" class="btn btn-light">Submit</button>
+			</form>
+	</div>
+</div>
+
+
+
+
+{% endblock %}

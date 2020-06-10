@@ -8,7 +8,21 @@ document.addEventListener('DOMContentLoaded', () =>  {
 	};
 
 	document.querySelector('#decrease').onclick = () => {
+		if (counter > 0){
 		counter--;
 		document.querySelector('h2').innerHTML = counter;
+		}
 	};
+
+	document.addEventListener('click', event => {
+		const element = event.target;
+        if (element.className === 'btn login'){
+        	let login = document.querySelector("#login");
+        	while(login.firstChild){		
+                  login.removeChild(login.firstChild);
+        	};
+
+        };
+	});	
+
 });

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -63,6 +64,19 @@ class DinnerPlatters (models.Model):
 
 	def __str__(self):
 		return f"{self.name}: Small {self.small}, Large {self.large}"
+
+class Address(models.Model):
+	country = models.CharField(max_length=64)
+	state = models.CharField (max_length=64)
+	city = models.CharField(max_length=64)
+	street = models.CharField(max_length=128)
+	number = models.CharField(max_length=10)
+	apartment = models.CharField(max_length=20, null=True, blank=True)
+	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='address')
+
+	def __str__(self):
+		return f"{Street} {number}, {apartment}, {city}, {state}"
+
 
 
 

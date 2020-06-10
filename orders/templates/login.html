@@ -1,0 +1,72 @@
+
+
+{% extends "base.html" %}
+{%block body%}
+
+<div class='row'>
+	<div class='col'>
+
+			<h3>LOGIN</h3>
+
+			<form action="{% url 'orders' %}" method="post">
+			{% csrf_token %}
+				<div class="form-group">
+					<label>Username</label>
+					<input name ='username' type="text" class="form-control">
+				</div>
+				<div class="form-group">
+					<label>Password</label>
+					<input name='password' type="password" class="form-control">
+				</div>
+				{% if message %}
+				<p style='color:red'>{{message}}</p>
+				{% endif %}
+				<button type="submit" class="btn btn-light">Login</button>
+			</form>
+
+
+		
+	</div>
+	<div class='col'>
+
+		<h3>SIGNUP</h3>
+		<form action="{% url 'signup' %}" method="post" >
+		    {% csrf_token %}
+		    <div class='form-group'>
+		    	<label>First Name</label>
+			    <input name="first_name" type="text" class="form-control"/>
+			</div>
+			<div class='form-group'>
+				<label>Last Name</label>
+			    <input name="last_name" type="text" class="form-control"/>
+			</div>
+			<div class='form-group'>
+				<label>Username</label>
+			    <input name="username" type="text" class="form-control"/>
+			</div>
+			<div class='form-group'>
+				<label>Email</label>
+			    <input name="email" type="email" class="form-control"/>
+			</div>
+			<div class='form-group'>
+				<label>Password</label>
+			    <input name="password1" type="password" class="form-control"/>
+			</div>
+			<div class='form-group'>
+				<label>Repeat Password</label>
+			    <input name="password2" type="password" class="form-control"/>
+			</div>
+			{% if message2 %}
+				<p style='color:red'>{{message2}}</p>
+			{% endif %}
+			    <input  class='btn btn-light' type="submit" value="Signup"/>
+			
+		</form>
+	</div>
+</div>
+
+
+
+
+
+{% endblock %}
