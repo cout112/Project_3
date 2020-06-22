@@ -1,15 +1,7 @@
 {% extends "base.html" %}
 {%block body%}
 <div class='container-fluid menu'>
-		<div class='row'>
-			<div class='col-12'>
-				<div class='row'>
-					<h2>0</h2>
-				    <button class='btn' id="increase">+</button>
-				    <button class='btn' id="decrease">-</button>
-				</div>
-			</div>
-		</div>
+	
 
 
 
@@ -93,8 +85,8 @@
 
 							<div class='col-xl-5'>
 								
-								<h6 style='margin-top:20px'>TOPPINGS</h6>	
-								<div class='row'>
+								<h6 style='margin-top:20px;display:inline'>TOPPINGS   </h6><span class='toppingsinfo' style='display:inline;color:#ffcccc'></span>	
+								<div class='row toppingssquare'>
 									{% for topping in toppings %}
 										<button class='toppings col-sm-auto btn'>{{topping.name}}</button>
 									{% endfor %}
@@ -133,8 +125,8 @@
 									{% for sub in subs %}
 									<tr>
 										<td>{{ sub.name }}</td>
-										<td class='prices'>{% if sub.small %}{{ sub.small }}{% endif %}</td>
-										<td class='prices'>{% if sub.large %}{{ sub.large }}{% endif %}</td>
+										<td class='prices'><button class='btn prices sub' value='{{sub.name}} Small'>{% if sub.small %}{{ sub.small }}{% endif %}</button></td>
+										<td class='prices'><button class='btn prices sub' value='{{sub.name}} Large'>{% if sub.large %}{{ sub.large }}{% endif %}</button></td>
 									</tr>
 									{% endfor %}
 								</tbody>
@@ -142,11 +134,12 @@
 							</div>
 							<div class='col-1'></div>
 							<div class='col-xl-5'>
-								
-								<h6>TOPPINGS</h6>		
-								<div class='row'>
+								<div class='row justify-content-between'>
+								<div class='col'><h6 style='display:inline'>TOPPINGS </h6><small style='color:#ffcccc'>+50cnts</small></div><div style='display:inline' class='displaysubmit col-auto'></div></div>
+
+								<div class='row subtoppingssquare'>
 									{% for topping in substoppings %}
-										<div class='toppings col-sm-3'>{{topping.name}}</div>
+										<button class='subtoppings col-sm-3 btn'>{{topping.name}}</button>
 									{% endfor %}
 								</div>
 							</div>
@@ -188,7 +181,7 @@
 								{% for salad in salads %}
 								<tr>
 									<td>{{ salad.name }}</td>
-									<td class='prices'>{{ salad.price }}</td>
+									<td class='prices'><button class='btn prices salad' value='{{salad.name}}'>{{ salad.price }}</button></td>
 								</tr>
 								{% endfor %}
 							</tbody>
@@ -226,7 +219,7 @@
 							{% for pasta in pastas %}
 							<tr>
 								<td>{{ pasta.name }}</td>
-								<td class='prices'>{{ pasta.price }}</td>
+								<td class='prices'><button class='btn prices pasta' value='{{pasta.name}}'>{{ pasta.price }}</button></td>
 							</tr>
 							{% endfor %}
 						</tbody>
@@ -263,8 +256,8 @@
 							{% for platter in dinnerplatters %}
 							<tr>
 								<td>{{ platter.name }}</td>
-								<td class='prices'>{{ platter.small }}</td>
-								<td class='prices'>{{ platter.large }}</td>
+								<td class='prices'><button class='btn prices platter' value='{{platter.name}} Small'>{{ platter.small }}</button></td>
+								<td class='prices'><button class='btn prices platter' value='{{platter.name}} Large'>{{ platter.large }}</button></td>
 							</tr>
 							{% endfor %}
 						</tbody>
@@ -282,14 +275,22 @@
 
 
 	</div>
-	<div class='col-xl-3'>
+	<div class='col-xl-3 cartfixed'>
 			<div class='card' style='padding:20px;font-size: 10px'>
 				<div class='row card-title' style='position:relative;left:10px'><h3>Order</h3></div>
 				
 				<div id='items'>
 					
 				</div>
-				<div class='row' style='position:relative;left:10px'><h5> TOTAL  = </h5><h5 id='total' >0.00</h5><h5> $</h5></div>
+				
+				<div style='height:20px'></div>
+				<div class='row justify-content-between' style='position:relative;left:10px'>
+					<h5 class='col'> TOTAL  = </h5>
+
+					<div class='col text-right' >
+						<h5 style='display:inline' id='total' >0.00</h5><h5 style='display:inline'> $</h5>
+					</div>
+				</div>
 			</div>
 		</div>
 </div>

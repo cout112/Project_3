@@ -1,4 +1,9 @@
-
+@media(min-width:1200px){
+	.cartfixed{
+		position:fixed;
+		right:30px;
+	}
+}
 th{
 	font-size:14px;
 }

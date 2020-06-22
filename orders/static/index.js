@@ -1,12 +1,14 @@
 document.addEventListener('DOMContentLoaded', () =>  {
 
-	let counter = 0;
+
 
 	let toppingbuttons = document.querySelectorAll('.toppings');
+	let subtoppingbuttons = document.querySelectorAll(".subtoppings");
 	disable_toppings();
+	disable_subtoppings();
 	let value;
 	let price;
-	let cart;
+
 	let items_amout;
 	let items;
 	let toppings;
@@ -22,16 +24,66 @@ document.addEventListener('DOMContentLoaded', () =>  {
 		const button = event.target;
 
 
+		if (button.className == 'btn prices platter'){
+			value = button.value;
+			price = parseFloat(button.innerHTML);
+			add_other(value, price);
+			value='';
+			price = 0;
+		}
 
+
+
+		if (button.className == 'btn prices pasta'){
+			value = button.value;
+			price = parseFloat(button.innerHTML);
+			add_other(value, price);
+			value='';
+			price = 0;
+		}
+
+		if (button.className == 'btn prices salad'){
+			value = button.value;
+			price = parseFloat(button.innerHTML);
+			add_other(value, price);
+			value='';
+			price = 0;
+		}
+
+
+		if (button.className == 'submit btn'){
+			add_pizza(value, items, price);
+			disable_subtoppings();
+			items.length = 0;
+			price = 0;
+			update_total();
+		}
+
+
+		if (button.className == 'btn prices sub'){
+			document.querySelector(".displaysubmit").innerHTML='';
+			value = button.value;
+			price = parseFloat(button.innerHTML);
+			console.log(price);
+			items = [];
+			able_subtoppings();
+		}
+
+		if (button.className == 'subtoppings col-sm-3 btn'){
+			button.style.background = '#ffe6e6';
+			items.push(button.innerHTML);
+			button.disabled = true;
+			price = price + 0.50;
+			console.log(price);
+		}
 
 
 		if (button.className == "btn prices pizza"){
 			value = button.value;
 			price = parseFloat(button.innerHTML);
-			cart = document.querySelector('.cart')
 			items_amount=button.dataset.items;
 			items = [];
-			toppings =0;
+			toppings = 0;
 
 
 			if (items_amount  === '0'){ 
@@ -58,6 +110,8 @@ document.addEventListener('DOMContentLoaded', () =>  {
 		if (button.className == 'toppings col-sm-auto btn'){
 			add = add +1;
 			items.push(button.innerHTML);
+			button.style.background = '#ffe6e6';
+			button.disabled = true;
 			if (add >= toppings){
 				disable_toppings();
 				add_pizza(value, items, price);
@@ -101,46 +155,76 @@ document.addEventListener('DOMContentLoaded', () =>  {
 		}
 	});
 
-	document.querySelector('#increase').onclick = () => {
-		counter++;
-		document.querySelector('h2').innerHTML = counter;
-	};
-
-	document.querySelector('#decrease').onclick = () => {
-		if (counter > 0){
-		counter--;
-		document.querySelector('h2').innerHTML = counter;
-		}
-	};
+	
 	const channel_template = Handlebars.compile(document.querySelector('#new_pizza').innerHTML);
 	
 	function add_pizza(value, items, price){
 		const pizza_item = channel_template({'value':value, 'items':items, 'price':price});
 		document.querySelector('#items').innerHTML += pizza_item;
-	 };
+	};
+
+	const channel_template_other = Handlebars.compile(document.querySelector('#new_item').innerHTML);
+	function add_other(value, price){
+		const other_item = channel_template_other({'value':value, 'price':price});
+		document.querySelector('#items').innerHTML += other_item;
+	};
+
+
+
 
 	function disable_toppings(){
 		for (let i = 0; i<toppingbuttons.length;i++){
-					toppingbuttons[i].disabled = true;
+			toppingbuttons[i].style.background = '';
+			toppingbuttons[i].disabled = true;
 		}
+		document.querySelector(".toppingssquare").style.border = "none";
+		document.querySelector(".toppingsinfo").innerHTML = '';
+
 	};
 
 	function able_toppings(){
 		for (let i = 0; i<toppingbuttons.length;i++){
 					toppingbuttons[i].disabled = false;
 		}
+		document.querySelector(".toppingssquare").style.border = "solid red 1px";
+		if (toppings === 1){
+			document.querySelector(".toppingsinfo").innerHTML = 'Choose ' + toppings + ' topping';
+		}else{
+			document.querySelector(".toppingsinfo").innerHTML = 'Choose ' + toppings + ' toppings';
+		}
+		
 	};
+
+	function disable_subtoppings(){
+		document.querySelector(".displaysubmit").innerHTML='';
+		document.querySelector(".subtoppingssquare").style.border = "none";
+		for (let i=0; i<subtoppingbuttons.length;i++){
+			subtoppingbuttons[i].style.background = '';
+			subtoppingbuttons[i].disabled = true;
+		}
+	}
+
+	function able_subtoppings(){
+		for (let i=0; i<subtoppingbuttons.length;i++){
+			subtoppingbuttons[i].disabled = false;
+		}
+		submitbutton = document.createElement('button');
+		submitbutton.className = 'submit btn';
+		submitbutton.innerHTML = 'Submit';
+		submitbutton.style.position = "relative";
+		submitbutton.style.bottom = "10px";
+		document.querySelector(".displaysubmit").append(submitbutton);
+		document.querySelector('.subtoppingssquare').style.border = "solid red 1px";
+	}
 
 
 	function update_total(){
 		prices = document.querySelectorAll(".price");
 		total = 0;
 		for (i=0; i<prices.length; i++){
-			console.log(parseFloat(prices[i].innerHTML));
 			total = total + parseFloat(prices[i].innerHTML);
 		}
-		console.log(`Equals to`);
-		console.log(total);
+
 		document.querySelector("#total").innerHTML = total.toFixed(2);
 	}
 	
