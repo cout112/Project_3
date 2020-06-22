@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {%block body%}
+<div class='container-xl'>
 		<div class='row'>
 			<div class='col-12'>
 				<div class='row'>
@@ -7,61 +8,250 @@
 				    <button class='btn' id="increase">+</button>
 				    <button class='btn' id="decrease">-</button>
 				</div>
-				<div class='row'>
-					<div class='col-xl-6'>
-						<h1>PIZZAS</h1>
-						<table class='table'>
-							<thead>
-							<tr>
-								<th scope='col'> Style</th>
-								<th scope='col'> Size</th>
-								<th scope='col'> Cheese</th>
-								<th scope='col'> Toppings</th>
-								<th scope='col'> +1</th>
-								<th scope='col'> +2</th>
-								<th scope='col'> +3</th>
-								<th scope='col'> +>3</th>
-							</tr>
-						</thead>
-						<tbody>
+			</div>
+		</div>
 
-						{% for pizza in pizzas %}
-							<tr>
-								<td> {{ pizza.style }} </td>
-								<td class='tolog'>{{ pizza.size }}</td>
-								<td>{{ pizza.price0 }}</td>
-								<td></td>
-								<td>{{ pizza.price1 }}</td>
-								<td>{{ pizza.price2 }}</td>
-								<td>{{ pizza.price3 }}</td>
-								<td>{{ pizza.price4 }}</td>
-							</tr>
-						{% endfor %}
-						</tbody>
-						</table>
-					</div>
-					<div class='col-1'></div>
-					<div class='col-xl-5'>
-					
-						<h3>TOPPINGS</h3>	
-						<div class='row'>
-							{% for topping in toppings %}
-								<div class='toppings col-sm-3'>{{topping.name}}</div>
-							{% endfor %}
+
+
+
+
+
+
+
+<div class="accordion" id="accordionExample">
+		  <div class="card">
+		    <div class="card-header" id="headingOne">
+		      <h2 class="mb-0">
+		        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+		          <h3>PIZZAS</h3>
+		        </button>
+		      </h2>
+		    </div>
+
+		    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+		      <div class="card-body">
+		        <div class='row'>
+							<div class='col-xl-7'>
+								
+								<div class='row' style="padding-top:20px;padding-bottom:20px; border-bottom:1px solid #e6e6e6;font-size:14px;color:#ff4d4d">
+									<div class='col-2' style="width: 18rem;">Style</div>
+									<div class='col-10'>
+										<div class='row'>
+										<div class='col-2'>Size</div>
+										{% for t in pizzatoppingsclass %}
+										<div class='col-2'>{% if t == "Cheese" %}<div>toppings</div>{% endif %}{{t}}</div>
+										{% endfor %}
+										</div>
+									</div>
+								</div>
+								{% for style in pizzastyles %}
+								<div class='row' style="padding-top:20px;padding-bottom:20px; border-bottom:1px solid #e6e6e6;font-size:14px">
+									<div class='col-2'>{{style}}</div>
+									<div class='col-10'>
+									{% for size in pizzasize %}
+										<div class='row' style='padding-bottom:10px;padding-top:10px'>
+											<div class='col-2'>
+												{{ size.size }}
+											</div>
+											
+											
+												{% for pizza in pizzas %}
+												{% if pizza.style == style %}
+												{% if pizza.size == size %}
+												
+												<div class='col-2'>
+													{{pizza.price0}}
+												</div>
+												<div class='col-2'>
+													{{pizza.price1}}
+												</div>
+												<div class='col-2'>
+													{{pizza.price2}}
+												</div>
+												<div class='col-2'>
+													{{pizza.price3}}
+												</div>
+												<div class='col-2'>
+													{{pizza.price4}}
+												</div>
+												
+
+												{% endif %}
+												{% endif %}
+												{% endfor %}
+											</div>
+
+										
+									{% endfor %}
+									</div>
+								</div>
+								{% endfor %}
+
+						
+							</div>
+
+							<div class='col-xl-5'>
+								
+								<h6 style='margin-top:20px'>TOPPINGS</h6>	
+								<div class='row'>
+									{% for topping in toppings %}
+										<div class='toppings col-sm-auto'>{{topping.name}}</div>
+									{% endfor %}
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="card">
+		    <div class="card-header" id="headingTwo">
+		      <h2 class="mb-0">
+		        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+		          <h3>SUBS</h3>
+		        </button>
+		      </h2>
+		    </div>
+		    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+		      <div class="card-body">
+		       
 
-				<hr>
+						<div class='row'>
+							<div class='col-xl-6'>	
+								<table class='table'>
+									<thead>
+									<tr>
+										
+										<th scope='col'>Subs</th>
+										<th scope='col'>Small</th>
+										<th scope='col'>Large</th>
+										
+										
+									</tr>
+								</thead>
+								<tbody>
+									{% for sub in subs %}
+									<tr>
+										<td>{{ sub.name }}</td>
+										<td class='prices'>{% if sub.small %}{{ sub.small }}{% endif %}</td>
+										<td class='prices'>{% if sub.large %}{{ sub.large }}{% endif %}</td>
+									</tr>
+									{% endfor %}
+								</tbody>
+								</table>
+							</div>
+							<div class='col-1'></div>
+							<div class='col-xl-5'>
+								
+								<h6>TOPPINGS</h6>		
+								<div class='row'>
+									{% for topping in substoppings %}
+										<div class='toppings col-sm-3'>{{topping.name}}</div>
+									{% endfor %}
+								</div>
+							</div>
+						</div>
 
-				<div class='row'>
-					<div class='col-xl-6'>
-						<h1>SUBS</h1>	
-						<table class='table'>
+
+
+
+
+
+
+
+
+		      </div>
+		    </div>
+		  </div>
+		  <div class="card">
+		    <div class="card-header" id="headingThree">
+		      <h2 class="mb-0">
+		        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+		          <h3>SALADS</h3>
+		        </button>
+		      </h2>
+		    </div>
+		    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+		      <div class="card-body">
+		        
+							<table class='table'>
+								<thead>
+								<tr>
+									
+									<th scope='col'>Salads</th>
+									<th scope='col'>Price</th>
+									
+									
+								</tr>
+							</thead>
+							<tbody>
+								{% for salad in salads %}
+								<tr>
+									<td>{{ salad.name }}</td>
+									<td class='prices'>{{ salad.price }}</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+							</table>
+
+
+		      </div>
+		    </div>
+		  </div>
+
+
+
+	  <div class="card">
+	    <div class="card-header" id="headingFour">
+	      <h2 class="mb-0">
+	        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+	          <h3>PASTA</h3>
+	        </button>
+	      </h2>
+	    </div>
+	    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+	      <div class="card-body">
+	        
+							<table class='table'>
 							<thead>
 							<tr>
 								
-								<th scope='col'>Subs</th>
+								<th scope='col'>Pasta</th>
+								<th scope='col'>Price</th>
+								
+								
+							</tr>
+						</thead>
+						<tbody>
+							{% for pasta in pastas %}
+							<tr>
+								<td>{{ pasta.name }}</td>
+								<td class='prices'>{{ pasta.price }}</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+						</table>
+
+
+	      </div>
+	    </div>
+	  </div>
+
+	  <div class="card">
+	    <div class="card-header" id="headingFive">
+	      <h2 class="mb-0">
+	        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+	          <h3>DINNER PLATTERS</h3>
+	        </button>
+	      </h2>
+	    </div>
+	    <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+	      <div class="card-body">
+	        
+						<table class='table'>
+						<thead>
+							<tr>
+								
+								<th scope='col'>Platter</th>
 								<th scope='col'>Small</th>
 								<th scope='col'>Large</th>
 								
@@ -69,100 +259,46 @@
 							</tr>
 						</thead>
 						<tbody>
-							{% for sub in subs %}
+							{% for platter in dinnerplatters %}
 							<tr>
-								<td>{{ sub.name }}</td>
-								<td>{{ sub.small }}</td>
-								<td>{{ sub.large }}</td>
+								<td>{{ platter.name }}</td>
+								<td class='prices'>{{ platter.small }}</td>
+								<td class='prices'>{{ platter.large }}</td>
 							</tr>
 							{% endfor %}
 						</tbody>
 						</table>
-					</div>
-					<div class='col-1'></div>
-					<div class='col-xl-5'>
-						
-						<h3>TOPPINGS</h3>	
-						<div class='row'>
-							{% for topping in substoppings %}
-								<div class='toppings col-sm-3'>{{topping.name}}</div>
-							{% endfor %}
-						</div>
-					</div>
-				</div>
 
 
-					<hr>
-					<h1>SALADS</h1>	
-					<table class='table'>
-						<thead>
-						<tr>
-							
-							<th scope='col'>Salads</th>
-							<th scope='col'>Price</th>
-							
-							
-						</tr>
-					</thead>
-					<tbody>
-						{% for salad in salads %}
-						<tr>
-							<td>{{ salad.name }}</td>
-							<td>{{ salad.price }}</td>
-						</tr>
-						{% endfor %}
-					</tbody>
-					</table>
+	      </div>
+	    </div>
+	  </div>
+
+	</div>
+</div>
 
 
-					<hr>
-					<h1>PASTA</h1>	
-					<table class='table'>
-						<thead>
-						<tr>
-							
-							<th scope='col'>Pasta</th>
-							<th scope='col'>Price</th>
-							
-							
-						</tr>
-					</thead>
-					<tbody>
-						{% for pasta in pastas %}
-						<tr>
-							<td>{{ pasta.name }}</td>
-							<td>{{ pasta.price }}</td>
-						</tr>
-						{% endfor %}
-					</tbody>
-					</table>
 
 
-					<hr>
-					<h1>DINNER PLATTERS</h1>	
-					<table class='table'>
-						<thead>
-						<tr>
-							
-							<th scope='col'>Platter</th>
-							<th scope='col'>Small</th>
-							<th scope='col'>Large</th>
-							
-							
-						</tr>
-					</thead>
-					<tbody>
-						{% for platter in dinnerplatters %}
-						<tr>
-							<td>{{ platter.name }}</td>
-							<td>{{ platter.small }}</td>
-							<td>{{ platter.large }}</td>
-						</tr>
-						{% endfor %}
-					</tbody>
-					</table>
-						
 
-			</div>
-		</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				
 {%endblock%}

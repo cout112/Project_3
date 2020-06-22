@@ -3,23 +3,36 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+class PizzaStyle (models.Model):
+	style = models.CharField(max_length=64)
+
+	def  __str__(self):
+		return self.style
+
 class PizzaSize (models.Model):
 	size = models.CharField(max_length=64)
 
 	def  __str__(self):
 		return self.size
 
-class Pizza (models.Model):
-	style = models.CharField(max_length=64)
-	size = models.ForeignKey(PizzaSize, on_delete=models.CASCADE)
-	price0 = models.DecimalField(max_digits=5, decimal_places=2)
-	price1 = models.DecimalField(max_digits=5, decimal_places=2)
-	price2 = models.DecimalField(max_digits=5, decimal_places=2)
-	price3 = models.DecimalField(max_digits=5, decimal_places=2)
-	price4 = models.DecimalField(max_digits=5, decimal_places=2)
+class PizzaToppingsClass(models.Model):
+	classification = models.CharField(max_length=64)
 
 	def __str__(self):
-		return f"Pizza {self.style} {self.size}"
+		return self.classification
+
+class Pizza (models.Model):
+	style = models.ForeignKey(PizzaStyle, on_delete=models.CASCADE)
+	size = models.ForeignKey(PizzaSize, on_delete=models.CASCADE)
+	price0= models.DecimalField(max_digits=5, decimal_places=2, null=True)
+	price1= models.DecimalField(max_digits=5, decimal_places=2, null=True)
+	price2= models.DecimalField(max_digits=5, decimal_places=2, null=True)
+	price3= models.DecimalField(max_digits=5, decimal_places=2, null=True)
+	price4= models.DecimalField(max_digits=5, decimal_places=2, null=True)
+
+
+	def __str__(self):
+		return f"Pizza {self.style} {self.size}: {self.price0},{self.price2},{self.price3},{self.price4}"
 
 
 class PizzaTopping(models.Model):
@@ -75,7 +88,7 @@ class Address(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='address')
 
 	def __str__(self):
-		return f"{Street} {number}, {apartment}, {city}, {state}"
+		return f"{self.street} {self.number}, {self.apartment}, {self.city}, {self.country}"
 
 
 

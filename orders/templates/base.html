@@ -6,7 +6,34 @@
 	<title>Pizza</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 	<link rel="stylesheet" href="{% static 'style.css' %}"/>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
 	<script src="{% static 'index.js' %}"></script>
+	<script id="new_pizza" type="text/x-handlebars-template">
+		{% verbatim %}
+		<div>
+		<div class="row justify-content-between">
+			<div class='col'>{{value}} 
+			x<span class='amount'>1</span>
+			<button class='btn btn-light +' style='font-size:10px' style='padding:1px'>+</button>
+			<button class='btn btn-light -' style='font-size:10px' style='padding:1px'>-</button></div>
+			<div class='col-auto'>
+			
+			<span class='price'>{{price}}</span>
+			</div>
+			
+		</div>
+		<div class='row'>
+			<div class='col'>
+			<ul>
+				<li>{{items}}</li>
+			</ul>
+			</div>
+		</div>
+		</div>
+
+		{% endverbatim %}
+	</script>
+
 </head>
 <body>
 	
@@ -32,11 +59,17 @@
 	</nav>
 	<div style='height:150px'></div>
 
-	<div class='container-xl'>
+
 		{% block body %}{% endblock %}
-	</div>
+
 	<div style='height:130px'></div>
-	
+
+
+
+
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
 			
 </body>

@@ -4,55 +4,65 @@
 
 
 
+<div class='container-xl'>
+<div class='row'  style='padding:5px'>
+	<div class="card col">
 
-<div class='row card'  style='padding:5px'>
-	<div class='card-body'>
-		<div class='col-6'>
+		<div class='row justify-content-between'>
+		<div class='col-md-6 card-body'>
 			
-			<h3>{{user.email}}</h3>
+				
+				<h3>{{user.username}}</h3>
+				<small>{{user.email}}</small>
 		</div>
-		<div class='col-6'>
+		<div class='col-2 card-body'>
 
-			<form action="{% url 'logout' %}" method='post'>
-				{% csrf_token %}
-			<button type='submit' href="{% url 'logout' %}" class="btn btn-light">Logout</button>
-			</form>
+				<form action="{% url 'logout' %}" method='post'>
+					{% csrf_token %}
+				<button type='submit' class="btn btn-light" style='margin-top:15px'>Logout</button>
+				</form>
+		</div>
 		</div>
 
 
 		<div>
-			Known addresses
-			
+				<h5>Known Address</h5>
+				<ul>
+				{% for add in address %}
+					<li>{{add}}</li>
+				{% endfor %}
+				</ul>	
 		</div>
+
 	</div>
-	
 </div>
+<div style='height:50px'></div>
 <div class='row'>
-	<div class='col-9'>ORDERS</div>
-	<div class='col-3 card'>
+	<div class='col-md-9'>ORDERS</div>
+	<div class='col-md-3 card'>
 
 	<div><h3>Add address</h3></div>
 
 
-			<form action="{% url 'logout' %}" method='post'>
+			<form action="{% url 'address' %}" method='post'>
 				{% csrf_token %}
 				<label> Country </label>
-				<input type='text' class="form-control"/>
+				<input type='text' name="country" class="form-control"/>
 				<label> State </label>
-				<input type='text' class="form-control"/>
+				<input type='text' name="state" class="form-control"/>
 				<label> City </label>
-				<input type='text' class="form-control"/>
+				<input type='text' name="city" class="form-control"/>
 				<label> Street </label>
-				<input type='text' class="form-control"/>
+				<input type='text' name="street" class="form-control"/>
 				<label> Number </label>
-				<input type='text' class="form-control"/>
+				<input type='text' name="number" class="form-control"/>
 				<label> Apartment (if not a house) </label>
-				<input type='text' class="form-control"/>
-			<button type='submit' href="{% url 'address' %}" class="btn btn-light">Submit</button>
+				<input type='text' name="apartment" class="form-control"/>
+				<button type='submit'class="btn btn-light">Submit</button>
 			</form>
 	</div>
 </div>
-
+</div>
 
 
 

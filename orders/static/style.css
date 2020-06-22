@@ -12,6 +12,9 @@ h3{
 	color:red;
 	padding-top:15px;
 }
+h6{
+	color:#ff4d4d;
+}
 .toppings{
 	padding-top:8px;
 	padding-bottom:15px;
@@ -31,4 +34,20 @@ h3{
 }
 .red{
 	color:red;
+}
+.card_user{
+	padding:15px;
+
+}
+.prices{
+	font-size:15px;
+	font-weight:bold;
+}
+th{
+	color:#ff4d4d;
+	font-weight:normal;
+}
+.menu{
+	padding-left:50px;
+	padding-right:50px;
 }

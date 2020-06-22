@@ -2,19 +2,21 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render
-from orders.models import PizzaSize, Pizza, PizzaTopping, Subs, SubsTopping, Pasta, Salad, DinnerPlatters, Address
+from orders.models import PizzaSize, PizzaStyle, PizzaToppingsClass, Pizza, PizzaTopping, Subs, SubsTopping, Pasta, Salad, DinnerPlatters, Address
 from django.urls import reverse
 
 
 context = {
 		"pizzas":Pizza.objects.all(),
+		"pizzasize":PizzaSize.objects.all(),
+		"pizzatoppingsclass":PizzaToppingsClass.objects.all(),
+		"pizzastyles":PizzaStyle.objects.all(),
 		"toppings":PizzaTopping.objects.all(),
 		"subs":Subs.objects.all(),
 		"substoppings":SubsTopping.objects.all(),
 		"salads":Salad.objects.all(),
 		"pastas":Pasta.objects.all(),
 		"dinnerplatters":DinnerPlatters.objects.all(),
-		"address":Address.objects.all(),
 	}
 
 
@@ -23,8 +25,11 @@ def index(request):
 	
 	#user = authenticate(request)
 	if not request.user.is_authenticated:
+		
+
 		print ("Not authenticated")
 		return render(request, "index.html", context)
+	
 	print ("Authenticated")
 	return render(request, "orders.html", context)
 	
@@ -32,6 +37,10 @@ def index(request):
 def login_view(request):
 	if not request.user.is_authenticated:
 		return render(request, "login.html")
+	context = {
+		"orders":"",
+		"address":Address.objects.filter(user=request.user),		
+	}
 	return render (request, "userpage.html", context)
 
 def login_authenticate(request):
@@ -74,25 +83,35 @@ def signup(request):
 	user.save()
 	
 	return render(request, "orders.html", context)
-	
-	
 
-
-
-
+ 
 def logout_view(request):
 	logout(request)
 	
 	return render(request, "index.html", context)
 
 def add_address(request):
+	print("New address request from")
 	context = {
 		"orders":"",
-		"address":Address.objects.filter(user=username),
+		"address":Address.objects.filter(user=request.user),
 	}
 	if request.method !=  'POST':
 		return render(request, "userpage.html", context)
-	return 'added address'
+	country = request.POST['country']
+	state = request.POST['state']
+	city = request.POST['city']
+	street = request.POST['street']
+	number = request.POST['number']
+	apartment = None
+	if request.POST['apartment']:
+		apartment = request.POST['apartment']
+	address = Address(country=country, state=state, city=city, street=street, number=number, apartment=apartment, user=request.user)
+	address.save()
+	return render(request, "userpage.html", context)
+
+
+
 
 
 
