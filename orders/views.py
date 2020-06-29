@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render
-from orders.models import PizzaSize, PizzaStyle, PizzaToppingsClass, Pizza, PizzaTopping, Subs, SubsTopping, Pasta, Salad, DinnerPlatters, Address
+from orders.models import PizzaSize, PizzaStyle, PizzaToppingsClass, Pizza, PizzaTopping, Subs, SubsTopping, Pasta, Salad, DinnerPlatters, Address, Orders
 from django.urls import reverse
 
 
@@ -38,7 +38,7 @@ def login_view(request):
 	if not request.user.is_authenticated:
 		return render(request, "login.html")
 	context = {
-		"orders":"",
+		"orders":Orders.objects.filter(user=request.user).order_by('-pk'),
 		"address":Address.objects.filter(user=request.user),		
 	}
 	return render (request, "userpage.html", context)
@@ -48,9 +48,7 @@ def login_authenticate(request):
 	if request.method == 'POST':
 		username = request.POST['username']
 		password = request.POST['password']
-		print (f"\nlogin request for username:{username}, with password:{password}\n")
 		user = authenticate(request, username=username, password=password)
-		print (f"user authentication is {user}")
 	if user is not None:
 		login(request, user)	
 		return render(request, "orders.html", context)
@@ -82,7 +80,7 @@ def signup(request):
 	user.last_name=last_name
 	user.save()
 	
-	return render(request, "orders.html", context)
+	return render(request, "index.html", context)
 
  
 def logout_view(request):
@@ -91,13 +89,15 @@ def logout_view(request):
 	return render(request, "index.html", context)
 
 def add_address(request):
-	print("New address request from")
 	context = {
-		"orders":"",
+		"orders":Orders.objects.filter(user=request.user).order_by('-pk'),
 		"address":Address.objects.filter(user=request.user),
 	}
 	if request.method !=  'POST':
 		return render(request, "userpage.html", context)
+	if Address.objects.filter(user=request.user) != None:
+		Address.objects.filter(user=request.user).delete()
+
 	country = request.POST['country']
 	state = request.POST['state']
 	city = request.POST['city']
@@ -109,6 +109,36 @@ def add_address(request):
 	address = Address(country=country, state=state, city=city, street=street, number=number, apartment=apartment, user=request.user)
 	address.save()
 	return render(request, "userpage.html", context)
+
+def order(request):
+	context = {
+		"pizzas":Pizza.objects.all(),
+		"pizzasize":PizzaSize.objects.all(),
+		"pizzatoppingsclass":PizzaToppingsClass.objects.all(),
+		"pizzastyles":PizzaStyle.objects.all(),
+		"toppings":PizzaTopping.objects.all(),
+		"subs":Subs.objects.all(),
+		"substoppings":SubsTopping.objects.all(),
+		"salads":Salad.objects.all(),
+		"pastas":Pasta.objects.all(),
+		"dinnerplatters":DinnerPlatters.objects.all(),
+	}
+	if request.method == 'GET':
+		return render(request, "orders.html", context)
+	price=request.POST['price']
+	items=request.POST['items']
+	user = request.user
+	address = request.user.address
+	order = Orders(user=user, items=items, total=price, address=address)
+	order.save()
+
+	# context = {
+	# 	"orders":Orders.objects.filter(user=user),
+	# 	"address":Address.objects.filter(user=request.user),
+	# }
+	return render(request, "complete.html", context)
+
+
 
 
 

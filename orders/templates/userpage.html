@@ -19,7 +19,7 @@
 
 				<form action="{% url 'logout' %}" method='post'>
 					{% csrf_token %}
-				<button type='submit' class="btn btn-light" style='margin-top:15px'>Logout</button>
+				<button type='submit' class="btn btn-light logout" style='margin-top:15px'>Logout</button>
 				</form>
 		</div>
 		</div>
@@ -38,11 +38,46 @@
 </div>
 <div style='height:50px'></div>
 <div class='row'>
-	<div class='col-md-9'>ORDERS</div>
+	<div class='col-md-8'>
+
+
+
+		{% for order in orders %}
+		<div class='row'>
+			<div class='col card'>
+				
+				
+				<div class='card-body'>{{order.items}} </div>
+				<div class='card-body'>{{order.address}} </div>
+				
+				<div style='height:20px'></div>
+				<div class='card-body row justify-content-between' style='position:relative;left:10px'>
+					<h5 class='col'> TOTAL  = </h5>
+
+					<div class='col text-right' >
+						<h5 style='display:inline'>{{order.total}}</h5><h5 style='display:inline'> $</h5>
+					</div>
+				</div>
+					
+			</div>
+		</div>
+		<div class='row' style='height:20px'></div>
+		{% endfor %}
+
+	</div>
+
+
+
+
+	<div class='col-1'></div>
+
+
 	<div class='col-md-3 card'>
-
+		{% if address %}
+	<div><h3>Change address</h3></div>
+		{% else %}
 	<div><h3>Add address</h3></div>
-
+	    {% endif %}
 
 			<form action="{% url 'address' %}" method='post'>
 				{% csrf_token %}

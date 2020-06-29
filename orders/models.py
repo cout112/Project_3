@@ -85,16 +85,28 @@ class Address(models.Model):
 	street = models.CharField(max_length=128)
 	number = models.CharField(max_length=10)
 	apartment = models.CharField(max_length=20, null=True, blank=True)
-	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='address')
+	user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='address')
 
 	def __str__(self):
 		return f"{self.street} {self.number}, {self.apartment}, {self.city}, {self.country}"
 
 
+# class State(models.Model):
+#  	state=models.CharField(max_length=64)
+
+#  	def __str__(self):
+#  		return f"{self.state}"
 
 
+class Orders(models.Model):
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	items = models.TextField()
+	total = models.DecimalField(max_digits=5, decimal_places=2)
+	address = models.ForeignKey(Address, on_delete=models.CASCADE, related_name='orders')
+	#state = models.ForeignKey(State, on_delete=models.SET_DEFAULT, default=0, blank=True, related_name="orders")
 
-
+	def __str__(self):
+		return f"{self.user}: {self.items} to {self.address} for  {self.total}: Status = {state}"
 
 
 

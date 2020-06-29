@@ -11,49 +11,51 @@
 	<script id="new_pizza" type="text/x-handlebars-template">
 		{% verbatim %}
 		<div>
-		<div class="row justify-content-between">
-			<div class='col'>{{value}} 
-			x<span class='amount'>1</span>
-			<button class='btn btn-light +' style='font-size:10px' style='padding:1px'>+</button>
-			<button class='btn btn-light -' style='font-size:10px' style='padding:1px'>-</button></div>
-			<div class='col-auto'>
-			
-			<span class='price'>{{price}}</span>
+			<div class="row justify-content-between">
+				<div class='col'><span class='forticket'>{{value}}   x<span class='amount'>1</span></span>
+					<button class='btn btn-light +' style='font-size:10px' style='padding:1px'>+</button>
+					<button class='btn btn-light -' style='font-size:10px' style='padding:1px'>-</button>
+				</div>
+				<div class='col-auto'>
+					<span class='price'>{{price}}</span>
+				</div>
 			</div>
-			
-		</div>
-		<div class='row'>
-			<div class='col'>
-			<ul>
-				<li>{{items}}</li>
-			</ul>
+			<div class='row'>
+				<div class='col forticket'>{{items}}</div>
 			</div>
+			<hr/>
 		</div>
-		</div>
-		<hr/>
-
-		{% endverbatim %}
+	{% endverbatim %}
 	</script>
 	<script id="new_item" type="text/x-handlebars-template">
-		{% verbatim %}
-		<div>
+		{% verbatim %}<div>
 			<div class="row justify-content-between">
-				<div class='col'>{{value}} 
-				x<span class='amount'>1</span>
+				<div class='col'><span class='forticket'>{{value}} 
+				x<span class='amount'>1</span></span>
 				<button class='btn btn-light +' style='font-size:10px' style='padding:1px'>+</button>
 				<button class='btn btn-light -' style='font-size:10px' style='padding:1px'>-</button></div>
 				<div class='col-auto'>
 				
 				<span class='price'>{{price}}</span>
 				</div>
-				
-		</div>
-		<hr/>
+			<hr/>	
+		</div>{% endverbatim %}
+	</script>
+	<script id="orderbutton" type="text/x-handlebars-template">
 		
-
+		
+		{% verbatim %}
+			<input type='hidden' name='items' value='{{items}}'>
+			<input type='hidden' name='price' value='{{price}}'>
 
 		{% endverbatim %}
+	
 	</script>
+
+	<!-- <form action="{% url 'logout' %}" method='post'>
+		{% csrf_token %}
+	<button type='submit' class="btn btn-light logout" style='margin-top:15px'>Logout</button>
+	</form> -->
 
 </head>
 <body>

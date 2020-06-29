@@ -279,17 +279,23 @@
 			<div class='card' style='padding:20px;font-size: 10px'>
 				<div class='row card-title' style='position:relative;left:10px'><h3>Order</h3></div>
 				
-				<div id='items'>
-					
-				</div>
+				<div id='items'></div>
 				
 				<div style='height:20px'></div>
 				<div class='row justify-content-between' style='position:relative;left:10px'>
 					<h5 class='col'> TOTAL  = </h5>
 
 					<div class='col text-right' >
-						<h5 style='display:inline' id='total' >0.00</h5><h5 style='display:inline'> $</h5>
+						<h5 style='display:inline' id='total'>0.00</h5><h5 style='display:inline'> $</h5>
 					</div>
+				</div>
+				<div  class='row justify-content-end'>
+					<form id='orderform' action="{% url 'order' %}" method='post'>
+					{% csrf_token %}
+						<input type='hidden' id='ordervalue' name='items' >
+						<input type='hidden' id='orderprice' name='price' >
+						<input id='order' type="hidden" class='btn btn-danger order'  name='order' value='ORDER'/>
+					</form>
 				</div>
 			</div>
 		</div>
